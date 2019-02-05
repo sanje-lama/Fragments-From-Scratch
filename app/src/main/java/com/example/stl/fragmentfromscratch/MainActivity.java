@@ -34,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         Retrofit retrofit=RetrofitSingleton.getInstance();
-        PlanetService retrofitServiceInterface=retrofit.create(PlanetService.class);
-        Call<PlanetList> planetListCall=(retrofitServiceInterface).planetData();
+        PlanetService planetService=retrofit.create(PlanetService.class);
+        Call<PlanetList> planetListCall=planetService.planetData();
         planetListCall.enqueue(new Callback<PlanetList>() {
             @Override
             public void onResponse(Call<PlanetList> call, Response<PlanetList> response) {
                 PlanetList responseData=response.body();
-                Log.d(TAG, "onResponse: "+responseData.getPlanets().get(0).getImage());
+                Log.d(TAG, "onResponse: "+responseData.getPlanets());
 
                 adapter = new PlanetAdapter(response.body().getPlanets());
                 recyclerView.setAdapter(adapter);
